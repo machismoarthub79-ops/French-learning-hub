@@ -9,17 +9,41 @@ var Voice = (function () {
 
   var playbackRate = 1;
   var frVoice = null;
+  var voicesChecked = false; // true once we've looked at a non-empty voice list at least once
 
   function isSupported() {
     return 'speechSynthesis' in window;
   }
 
+  // Some voice packs report lang as "fr-FR"/"fr-CA"/etc, others report an odd
+  // or missing lang but a recognizable name ("Google français", "Amelie").
+  // Try the reliable lang match first, fall back to a name-based guess.
+  function findFrenchVoice(voices) {
+    return voices.find(function (v) { return v.lang && v.lang.toLowerCase() === 'fr-fr'; }) ||
+           voices.find(function (v) { return v.lang && v.lang.toLowerCase().indexOf('fr') === 0; }) ||
+           voices.find(function (v) { return v.name && /fran[çc]ais|french/i.test(v.name); }) ||
+           null;
+  }
+
   function loadVoices() {
     if (!isSupported()) return;
     var voices = window.speechSynthesis.getVoices();
-    if (!voices.length) return;
-    frVoice = voices.find(function (v) { return v.lang === 'fr-FR'; }) ||
-              voices.find(function (v) { return v.lang && v.lang.indexOf('fr') === 0; }) || null;
+    if (!voices.length) return; // list not populated yet, wait for onvoiceschanged
+    voicesChecked = true;
+    frVoice = findFrenchVoice(voices);
+  }
+
+  // True once we've actually found a French voice to use. False either while
+  // the voice list is still loading, or once loaded with no French voice found.
+  function hasFrenchVoice() {
+    return !!frVoice;
+  }
+
+  // True once the browser's voice list has been inspected at least once,
+  // whether or not a French voice was in it — used to tell "still loading"
+  // apart from "loaded, but nothing French available".
+  function voicesReady() {
+    return voicesChecked;
   }
 
   function setRate(rate) {
@@ -64,16 +88,53 @@ var Voice = (function () {
     });
   }
 
-  // Shows the "not supported" banner (if present on the page) and, when
-  // supported, loads the French voice list. Returns whether speech is supported.
+  function showWarning(warningElId, message) {
+    var el = document.getElementById(warningElId);
+    if (!el) return;
+    if (message) el.textContent = message;
+    el.style.display = 'block';
+  }
+
+  function hideWarning(warningElId) {
+    var el = document.getElementById(warningElId);
+    if (el) el.style.display = 'none';
+  }
+
+  // Re-checks the voice list once it's had a chance to load, and shows a
+  // banner explaining that playback will sound wrong if no French voice was
+  // found — this is what produces the "half English, half French" pronunciation
+  // some browsers/OSes fall back to when speaking fr-FR text with an English voice.
+  function checkFrenchVoiceAndWarn(warningElId) {
+    if (!voicesReady()) return;
+    if (hasFrenchVoice()) {
+      hideWarning(warningElId);
+    } else {
+      showWarning(warningElId, "Aucune voix française trouvée sur cet appareil — la prononciation sera approximative (accent anglais). Essaie d'installer une voix/langue française dans les paramètres de synthèse vocale de ton système ou navigateur.");
+    }
+  }
+
+  // Shows the "not supported at all" banner (if present on the page) and,
+  // when supported, loads the French voice list and watches for a French
+  // voice actually being available, warning if not. Returns whether speech
+  // synthesis itself is supported (not whether a French voice was found —
+  // use hasFrenchVoice()/voicesReady() for that once the check has run).
   function initWarning(warningElId) {
     if (!isSupported()) {
-      var el = document.getElementById(warningElId);
-      if (el) el.style.display = 'block';
+      showWarning(warningElId, "La lecture vocale n'est pas prise en charge par ce navigateur.");
       return false;
     }
     loadVoices();
-    window.speechSynthesis.onvoiceschanged = loadVoices;
+    checkFrenchVoiceAndWarn(warningElId);
+    window.speechSynthesis.onvoiceschanged = function () {
+      loadVoices();
+      checkFrenchVoiceAndWarn(warningElId);
+    };
+    // Chrome in particular can populate the voice list without firing
+    // onvoiceschanged on some platforms — re-check shortly after as a fallback.
+    setTimeout(function () {
+      loadVoices();
+      checkFrenchVoiceAndWarn(warningElId);
+    }, 400);
     return true;
   }
 
@@ -81,6 +142,8 @@ var Voice = (function () {
     SPEAKER_SVG: SPEAKER_SVG,
     isSupported: isSupported,
     loadVoices: loadVoices,
+    hasFrenchVoice: hasFrenchVoice,
+    voicesReady: voicesReady,
     setRate: setRate,
     getRate: getRate,
     speak: speak,
