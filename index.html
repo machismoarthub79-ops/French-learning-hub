@@ -3,52 +3,68 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Verbe du Jour</title>
+<title>French Learning Hub</title>
 <link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="css/nav.css">
 </head>
 <body>
+<script>window.NAV_BASE = ''; window.NAV_ACTIVE = 'home';</script>
+<div id="site-nav"></div>
 <div class="wrap">
-  <header>
+  <header class="hero">
     <div class="title-row">
-      <h1>Verbe du Jour</h1>
+      <h1>French Learning Hub</h1>
     </div>
-    <div class="subtitle" id="subtitle">— chargement —</div>
-
-    <div class="row">
-      <div class="seg" role="group" aria-label="Catégorie">
-        <button class="cat-ALL active" data-cat="ALL">Aléatoire</button>
-        <button class="cat-ER" data-cat="ER">-er</button>
-        <button class="cat-IR" data-cat="IR">-ir</button>
-        <button class="cat-RE" data-cat="RE">-re / irr.</button>
-      </div>
-    </div>
-    <div class="row">
-      <div class="seg" role="group" aria-label="Mots par jour">
-        <button id="btn10" data-count="10">10 mots</button>
-        <button id="btn20" data-count="20">20 mots</button>
-      </div>
-      <button class="shuffle-btn" id="shuffleBtn" aria-label="Mélanger">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/><line x1="4" y1="4" x2="9" y2="9"/></svg>
-        Mélanger
-      </button>
-    </div>
-    <div class="row">
-      <div class="seg" role="group" aria-label="Vitesse audio">
-        <button class="speed-btn active" data-speed="1">1x</button>
-        <button class="speed-btn" data-speed="0.75">0.75x</button>
-        <button class="speed-btn" data-speed="0.5">0.5x</button>
-      </div>
-    </div>
-    <div class="legend"><span class="dot"></span> bordure = ne suit pas le patron régulier de son groupe</div>
-    <div class="voice-warning" id="voiceWarning">La lecture vocale n'est pas prise en charge par ce navigateur.</div>
+    <div class="subtitle">Un cours en 16 modules, de l'alphabet aux questions.</div>
+    <div class="intro">Choisis une section ci-dessous. Chaque section couvre un groupe de modules du programme — commence par « Prononciation » si tu débutes, ou va directement à « Verbes » si tu veux réviser les conjugaisons.</div>
   </header>
   <main>
-    <div id="cards"></div>
+    <div class="tab-grid">
+      <a class="tab-card" href="prononciation/index.html">
+        <span class="module-tag">Modules 1–2</span>
+        <h2>Prononciation</h2>
+        <p>L'alphabet, les accents et les sons nasaux.</p>
+      </a>
+      <a class="tab-card" href="noms-articles/index.html">
+        <span class="module-tag">Modules 3, 4, 7</span>
+        <h2>Noms &amp; Articles</h2>
+        <p>Genre, articles (un/une/le/la) et pluriel des noms.</p>
+      </a>
+      <a class="tab-card" href="adjectifs/index.html">
+        <span class="module-tag">Modules 5, 6, 8</span>
+        <h2>Adjectifs</h2>
+        <p>Démonstratifs, possessifs, forme féminine et position.</p>
+      </a>
+      <a class="tab-card" href="nombres-temps/index.html">
+        <span class="module-tag">Module 9</span>
+        <h2>Nombres &amp; Temps</h2>
+        <p>Jours, mois, saisons et les nombres de 1 à 100.</p>
+      </a>
+      <a class="tab-card" href="etre-avoir/index.html">
+        <span class="module-tag">Module 10</span>
+        <h2>Être &amp; Avoir</h2>
+        <p>Les deux verbes essentiels, et comment tout négativer.</p>
+      </a>
+      <a class="tab-card" href="verbes/index.html">
+        <span class="module-tag">Modules 11–15</span>
+        <h2>Verbes</h2>
+        <p>676 verbes -er/-ir/-re à conjuguer, avec audio.</p>
+      </a>
+      <a class="tab-card" href="questions/index.html">
+        <span class="module-tag">Module 16</span>
+        <h2>Questions</h2>
+        <p>Poser des questions : est-ce que, qui, où, quel...</p>
+      </a>
+      <a class="tab-card" href="lecture/index.html">
+        <span class="module-tag">Bonus</span>
+        <h2>Lecture</h2>
+        <p>Textes courts pour pratiquer la lecture à voix haute.</p>
+      </a>
+    </div>
   </main>
-  <div class="foot-note">Touchez 🔊 pour entendre la prononciation. Choisis une catégorie ou reste en mode Aléatoire. Ferme et rouvre pour un nouveau tirage — ou touche « Mélanger ».</div>
+  <div class="foot-note">Fait avec les notes de cours de français — alphabet jusqu'à l'interrogation.</div>
 </div>
-<script src="js/data/verbs.js"></script>
-<script src="js/data/sentences.js"></script>
-<script src="js/app.js"></script>
+<script src="js/voice.js"></script>
+<script src="js/nav.js"></script>
 </body>
 </html>
