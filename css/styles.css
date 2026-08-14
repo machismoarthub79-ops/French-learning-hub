@@ -247,3 +247,16 @@
   }
   .letter-chip .letter{font-family:'Fraunces',serif;font-weight:600;font-size:19px;}
   .letter-chip .phon{font-size:10px;color:var(--ink-soft);}
+
+  .number-grid{
+    display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));
+    gap:8px;margin:12px 0;
+  }
+  .number-chip{
+    display:flex;flex-direction:column;align-items:center;gap:3px;
+    background:var(--card);border:1px solid var(--line);border-radius:10px;
+    padding:9px 6px 7px;text-align:center;
+  }
+  .number-chip .digit{font-family:'Fraunces',serif;font-weight:600;font-size:16px;}
+  .number-chip .words{font-size:10.5px;color:var(--ink-soft);line-height:1.25;min-height:2.4em;}
+  .number-chip.irregular-zone{border-color:var(--warn);background:var(--warn-bg);}
