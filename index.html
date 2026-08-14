@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Verbe du Jour</title>
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="title-row">
+      <h1>Verbe du Jour</h1>
+    </div>
+    <div class="subtitle" id="subtitle">— chargement —</div>
+
+    <div class="row">
+      <div class="seg" role="group" aria-label="Catégorie">
+        <button class="cat-ALL active" data-cat="ALL">Aléatoire</button>
+        <button class="cat-ER" data-cat="ER">-er</button>
+        <button class="cat-IR" data-cat="IR">-ir</button>
+        <button class="cat-RE" data-cat="RE">-re / irr.</button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="seg" role="group" aria-label="Mots par jour">
+        <button id="btn10" data-count="10">10 mots</button>
+        <button id="btn20" data-count="20">20 mots</button>
+      </div>
+      <button class="shuffle-btn" id="shuffleBtn" aria-label="Mélanger">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/><line x1="4" y1="4" x2="9" y2="9"/></svg>
+        Mélanger
+      </button>
+    </div>
+    <div class="row">
+      <div class="seg" role="group" aria-label="Vitesse audio">
+        <button class="speed-btn active" data-speed="1">1x</button>
+        <button class="speed-btn" data-speed="0.75">0.75x</button>
+        <button class="speed-btn" data-speed="0.5">0.5x</button>
+      </div>
+    </div>
+    <div class="legend"><span class="dot"></span> bordure = ne suit pas le patron régulier de son groupe</div>
+    <div class="voice-warning" id="voiceWarning">La lecture vocale n'est pas prise en charge par ce navigateur.</div>
+  </header>
+  <main>
+    <div id="cards"></div>
+  </main>
+  <div class="foot-note">Touchez 🔊 pour entendre la prononciation. Choisis une catégorie ou reste en mode Aléatoire. Ferme et rouvre pour un nouveau tirage — ou touche « Mélanger ».</div>
+</div>
+<script src="js/data/verbs.js"></script>
+<script src="js/data/sentences.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
