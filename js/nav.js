@@ -15,6 +15,15 @@
     { id: 'lecture', path: 'lecture/index.html', label: 'Lecture' }
   ];
 
+  // The nav bar is sticky (see css/nav.css), and every page's own <header> is
+  // sticky right below it — so the page header needs to know the nav's actual
+  // rendered height (it varies by viewport width, and by open/closed state on
+  // mobile) rather than a guessed pixel value. Exposed as --nav-height on the
+  // root element; css/styles.css reads it for the page header's `top` offset.
+  function updateNavHeight(mount) {
+    document.documentElement.style.setProperty('--nav-height', mount.offsetHeight + 'px');
+  }
+
   function render() {
     var mount = document.getElementById('site-nav');
     if (!mount) return;
@@ -41,7 +50,14 @@
     toggle.addEventListener('click', function () {
       var isOpen = navLinks.classList.toggle('open');
       toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      updateNavHeight(mount);
     });
+
+    updateNavHeight(mount);
+    // Re-measure once webfonts finish swapping in (can shift line height)
+    // and whenever the viewport is resized across the mobile/desktop nav breakpoint.
+    window.addEventListener('load', function () { updateNavHeight(mount); });
+    window.addEventListener('resize', function () { updateNavHeight(mount); });
   }
 
   document.addEventListener('DOMContentLoaded', render);

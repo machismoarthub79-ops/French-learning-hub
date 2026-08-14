@@ -24,7 +24,7 @@
   }
   .wrap{max-width:640px;margin:0 auto;padding:0 16px;}
   header{
-    position:sticky;top:0;z-index:10;
+    position:sticky;top:var(--nav-height, 53px);z-index:10;
     background:var(--paper);
     border-bottom:1px solid var(--line);
     padding-top:22px;padding-bottom:14px;
