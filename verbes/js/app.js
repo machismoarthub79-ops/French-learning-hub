@@ -1,5 +1,3 @@
-  var SPEAKER_SVG = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M11 5 6 9H2v6h4l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M18 6a9 9 0 0 1 0 12" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.6"/></svg>';
-
   var CAT_NAMES  = {ALL:'Aléatoire', ER:'-er', IR:'-ir', RE:'-re / irr.'};
   var PRON_LABELS = ['Je','Tu','Il','Elle','On','Nous','Vous','Ils','Elles'];
   var PRON_IDX    = [0,1,2,2,2,3,4,5,5];   // index into v.c[6] for each pronoun row
@@ -33,9 +31,7 @@
 
   var wordsPerDay = 10;
   var category = 'ALL';
-  var playbackRate = 1;
   var currentSet = [];
-  var frVoice = null;
 
   function shuffle(arr){
     var a = arr.slice();
@@ -51,10 +47,6 @@
     return d.charAt(0).toUpperCase() + d.slice(1);
   }
 
-  function escapeHtml(s){
-    return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-  }
-
   function pool(){
     return category === 'ALL' ? VERBS : VERBS.filter(function(v){ return v.g === category; });
   }
@@ -64,18 +56,14 @@
     currentSet = shuffle(pool()).slice(0, n);
   }
 
-  function speakBtn(cls, text){
-    return '<button class="' + cls + '" data-text="' + escapeHtml(text) + '" aria-label="Écouter">' + SPEAKER_SVG + '</button>';
-  }
-
   function conjBlockHTML(v){
     if (IMPERSONAL[v.i]){
       var s = 'Il ' + v.c[2] + '.';
       var ex = IMPERSONAL_EXAMPLE[v.i];
       return '<div class="conj-block">' +
         '<div class="conj-group">' +
-          '<div class="conj-row"><div class="pron">Il</div><div class="conj-fr">' + escapeHtml(s) + '</div>' + speakBtn('conj-speak', s) + '</div>' +
-          '<div class="ex-row"><div class="txt"><div class="fr">' + escapeHtml(ex.fr) + '</div><div class="en">' + escapeHtml(ex.en) + '</div></div>' + speakBtn('ex-speak', ex.fr) + '</div>' +
+          '<div class="conj-row"><div class="pron">Il</div><div class="conj-fr">' + Voice.escapeHtml(s) + '</div>' + Voice.button('conj-speak', s) + '</div>' +
+          '<div class="ex-row"><div class="txt"><div class="fr">' + Voice.escapeHtml(ex.fr) + '</div><div class="en">' + Voice.escapeHtml(ex.en) + '</div></div>' + Voice.button('ex-speak', ex.fr) + '</div>' +
         '</div>' +
         '<div class="impersonal-note">Verbe impersonnel — seule cette forme existe.</div>' +
         '</div>';
@@ -91,8 +79,8 @@
       var ex = { fr: pair[0], en: pair[1] };
 
       rows += '<div class="conj-group">' +
-        '<div class="conj-row"><div class="pron">' + label + '</div><div class="conj-fr">' + escapeHtml(conjSentence) + '</div>' + speakBtn('conj-speak', conjSentence) + '</div>' +
-        '<div class="ex-row"><div class="txt"><div class="fr">' + escapeHtml(ex.fr) + '</div><div class="en">' + escapeHtml(ex.en) + '</div></div>' + speakBtn('ex-speak', ex.fr) + '</div>' +
+        '<div class="conj-row"><div class="pron">' + label + '</div><div class="conj-fr">' + Voice.escapeHtml(conjSentence) + '</div>' + Voice.button('conj-speak', conjSentence) + '</div>' +
+        '<div class="ex-row"><div class="txt"><div class="fr">' + Voice.escapeHtml(ex.fr) + '</div><div class="en">' + Voice.escapeHtml(ex.en) + '</div></div>' + Voice.button('ex-speak', ex.fr) + '</div>' +
       '</div>';
     }
     return '<div class="conj-block">' + rows + '</div>';
@@ -105,10 +93,10 @@
       '<div class="card' + (v.r === 0 ? ' irregular' : '') + '">' +
         '<div class="stamp ' + v.g + '">' + label + '</div>' +
         '<div class="word-line">' +
-          '<div class="infinitive">' + escapeHtml(v.i) + '</div>' +
-          '<button class="speak-btn" data-text="' + escapeHtml(v.i) + '" aria-label="Écouter">' + SPEAKER_SVG + '</button>' +
+          '<div class="infinitive">' + Voice.escapeHtml(v.i) + '</div>' +
+          Voice.button('speak-btn', v.i) +
         '</div>' +
-        '<div class="meaning">' + escapeHtml(v.e) + '</div>' +
+        '<div class="meaning">' + Voice.escapeHtml(v.e) + '</div>' +
         irrTag +
         '<div class="divider"></div>' +
         conjBlockHTML(v) +
@@ -131,45 +119,16 @@
     render();
   }
 
-  function loadVoices(){
-    if (!('speechSynthesis' in window)) return;
-    var voices = window.speechSynthesis.getVoices();
-    if (!voices.length) return;
-    frVoice = voices.find(function(v){ return v.lang === 'fr-FR'; }) ||
-              voices.find(function(v){ return v.lang && v.lang.indexOf('fr') === 0; }) || null;
-  }
-
-  function speak(text, btn){
-    if (!('speechSynthesis' in window)) return;
-    window.speechSynthesis.cancel();
-    var utter = new SpeechSynthesisUtterance(text);
-    utter.lang = 'fr-FR';
-    if (frVoice) utter.voice = frVoice;
-    utter.rate = 0.92 * playbackRate;
-    if (btn){
-      utter.onstart = function(){ btn.classList.add('playing'); };
-      utter.onend = function(){ btn.classList.remove('playing'); };
-      utter.onerror = function(){ btn.classList.remove('playing'); };
-    }
-    window.speechSynthesis.speak(utter);
-  }
-
   function savePrefs(){
     try {
       if (window.storage && window.storage.set) {
-        window.storage.set('verbeDuJour:prefs', JSON.stringify({c: wordsPerDay, cat: category, rate: playbackRate}), false).catch(function(){});
+        window.storage.set('verbeDuJour:prefs', JSON.stringify({c: wordsPerDay, cat: category, rate: Voice.getRate()}), false).catch(function(){});
       }
     } catch(e) {}
   }
 
   function init(){
-    var supported = 'speechSynthesis' in window;
-    if (!supported){
-      document.getElementById('voiceWarning').style.display = 'block';
-    } else {
-      loadVoices();
-      window.speechSynthesis.onvoiceschanged = loadVoices;
-    }
+    Voice.initWarning('voiceWarning');
 
     try {
       if (window.storage && window.storage.get) {
@@ -179,9 +138,9 @@
             if (p2.c === 10 || p2.c === 20) wordsPerDay = p2.c;
             if (p2.cat && CAT_NAMES[p2.cat]) category = p2.cat;
             if (p2.rate === 1 || p2.rate === 0.75 || p2.rate === 0.5) {
-              playbackRate = p2.rate;
+              Voice.setRate(p2.rate);
               document.querySelectorAll('.speed-btn').forEach(function(btn){
-                btn.classList.toggle('active', parseFloat(btn.getAttribute('data-speed')) === playbackRate);
+                btn.classList.toggle('active', parseFloat(btn.getAttribute('data-speed')) === p2.rate);
               });
             }
             pickSet(); render();
@@ -211,7 +170,7 @@
 
     document.querySelectorAll('.speed-btn').forEach(function(btn){
       btn.addEventListener('click', function(){
-        playbackRate = parseFloat(btn.getAttribute('data-speed'));
+        Voice.setRate(parseFloat(btn.getAttribute('data-speed')));
         document.querySelectorAll('.speed-btn').forEach(function(b){
           b.classList.toggle('active', b === btn);
         });
@@ -219,10 +178,7 @@
       });
     });
 
-    document.getElementById('cards').addEventListener('click', function(e){
-      var btn = e.target.closest('.speak-btn, .conj-speak, .ex-speak');
-      if (btn) speak(btn.getAttribute('data-text'), btn);
-    });
+    Voice.bindContainer(document.getElementById('cards'));
   }
 
   document.addEventListener('DOMContentLoaded', init);
