@@ -15,19 +15,95 @@
     <div class="title-row">
       <h1>Prononciation</h1>
     </div>
-    <div class="subtitle">Modules 1–2</div>
-    <div class="intro">L'alphabet, les accents et les sons nasaux.</div>
+    <div class="subtitle">Modules 1–2 · Alphabet, accents et sons nasaux</div>
+    <div class="intro">Touche 🔊 sur n'importe quel mot pour l'entendre. Ces règles n'ont pas de fiche d'exercice dédiée — le meilleur entraînement, c'est de relire à voix haute chaque mot de vocabulaire que tu croises ailleurs sur le site en appliquant ces règles.</div>
+    <div class="voice-warning" id="voiceWarning">La lecture vocale n'est pas prise en charge par ce navigateur.</div>
   </header>
   <main>
-    <div class="stub-card">
-      <p><strong>Contenu à venir.</strong></p>
-      <p>L'alphabet, les accents et les sons nasaux.</p>
-      <p>Suivi dans <a href="https://github.com/machismoarthub79-ops/French-learning-hub/issues/3">l'issue #3</a>.</p>
-      <p><a href="../index.html">&larr; Retour à l'accueil</a></p>
-    </div>
+
+    <section>
+      <h2>L'alphabet</h2>
+      <div id="alphabet-grid" class="alphabet-grid"></div>
+    </section>
+
+    <section>
+      <h2>La règle DESPOTIX</h2>
+      <p>À la fin d'un mot, les lettres <strong>D, E, S, P, T, X, Z</strong> sont muettes.</p>
+      <div class="trap"><strong>DESPOTIX</strong> — muettes seulement en fin de mot, jamais en début de mot.</div>
+      <div id="despotix-words" class="word-list"></div>
+      <div class="self-check">
+        <div class="q">Pourquoi le D de « canard » est-il muet, mais pas celui de « dur » ?</div>
+        <button class="reveal-btn">Voir la réponse</button>
+        <div class="answer">Une lettre DESPOTIX n'est muette qu'en <strong>fin</strong> de mot. Dans « dur », le D est au <strong>début</strong> du mot, donc il se prononce normalement.</div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Le H est toujours muet</h2>
+      <div id="h-words" class="word-list"></div>
+    </section>
+
+    <section>
+      <h2>Le S entre deux voyelles</h2>
+      <p>Un seul « s » placé entre deux voyelles se prononce [z].</p>
+      <div id="s-words" class="word-list"></div>
+    </section>
+
+    <section>
+      <h2>C, Ç et Ch</h2>
+      <p><strong>C</strong> se prononce [k] devant a/o/u, et [s] devant e/i/y. <strong>Ç</strong> se prononce toujours [s]. <strong>Ch</strong> se prononce [sh], sauf dans les mots d'origine grecque où il se prononce [k].</p>
+      <h3>C = [k] (devant a, o, u)</h3>
+      <div id="c-k-words" class="word-list"></div>
+      <h3>C = [s] (devant e, i, y)</h3>
+      <div id="c-s-words" class="word-list"></div>
+      <h3>Ç = [s] (toujours)</h3>
+      <div id="c-cedille-words" class="word-list"></div>
+      <h3>Ch = [sh] (normalement)</h3>
+      <div id="ch-sh-words" class="word-list"></div>
+      <h3>Ch = [k] (origine grecque)</h3>
+      <div id="ch-k-words" class="word-list"></div>
+    </section>
+
+    <section>
+      <h2>Qu = [k]</h2>
+      <div id="qu-words" class="word-list"></div>
+    </section>
+
+    <section>
+      <h2>Les accents</h2>
+      <p>Sauf indication contraire, un accent ne change pas la prononciation.</p>
+      <div class="rule-table-wrap">
+        <table class="rule-table">
+          <thead>
+            <tr><th>Accent</th><th>Nom</th><th>S'applique à</th><th>Effet</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>^</td><td>circonflexe</td><td>a e i o u</td><td>aucun — château, hôpital</td></tr>
+            <tr><td>´</td><td>aigu</td><td>e uniquement</td><td>é = [eh] — bébé, été</td></tr>
+            <tr><td>`</td><td>grave</td><td>e a u</td><td>ouvre le son du e — crème, voilà, où</td></tr>
+            <tr><td>¨</td><td>tréma</td><td>e i</td><td>sépare le son en deux — Noël, maïs</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section>
+      <h2>Les sons nasaux</h2>
+      <p>Une voyelle suivie de m ou n devient un son nasal.</p>
+      <div id="nasal-groups"></div>
+      <div class="self-check">
+        <div class="q">« Voilà » vs « Château » — quel accent, et change-t-il le son ?</div>
+        <button class="reveal-btn">Voir la réponse</button>
+        <div class="answer"><strong>Voilà</strong> a un accent grave (à) qui ouvre le son du a. <strong>Château</strong> a un accent circonflexe (â) qui ne change rien à la prononciation.</div>
+      </div>
+    </section>
+
   </main>
+  <div class="foot-note">Prononce chaque mot du site à voix haute en appliquant ces règles — c'est le meilleur entraînement pour ce module.</div>
 </div>
 <script src="../js/voice.js"></script>
 <script src="../js/nav.js"></script>
+<script src="../js/interactive.js"></script>
+<script src="js/app.js"></script>
 </body>
 </html>

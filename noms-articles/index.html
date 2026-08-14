@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Noms & Articles — French Learning Hub</title>
+<title>Noms &amp; Articles — French Learning Hub</title>
 <link rel="stylesheet" href="../css/styles.css">
 <link rel="stylesheet" href="../css/nav.css">
 </head>
@@ -13,21 +13,101 @@
 <div class="wrap">
   <header class="hero">
     <div class="title-row">
-      <h1>Noms & Articles</h1>
+      <h1>Noms &amp; Articles</h1>
     </div>
-    <div class="subtitle">Modules 3, 4, 7</div>
-    <div class="intro">Genre, articles (un/une/le/la) et pluriel des noms.</div>
+    <div class="subtitle">Modules 3, 4, 7 · Genre, articles et pluriel des noms</div>
+    <div class="intro">Ces trois modules vont ensemble : une fois que tu sais si un nom est masculin ou féminin, tu sais quel article utiliser, et le pluriel suit ses propres règles.</div>
+    <div class="voice-warning" id="voiceWarning">La lecture vocale n'est pas prise en charge par ce navigateur.</div>
   </header>
   <main>
-    <div class="stub-card">
-      <p><strong>Contenu à venir.</strong></p>
-      <p>Genre, articles (un/une/le/la) et pluriel des noms.</p>
-      <p>Suivi dans <a href="https://github.com/machismoarthub79-ops/French-learning-hub/issues/4">l'issue #4</a>.</p>
-      <p><a href="../index.html">&larr; Retour à l'accueil</a></p>
-    </div>
+
+    <section>
+      <h2>Le genre des noms</h2>
+      <p>Chaque nom est masculin ou féminin. Certaines terminaisons donnent un indice fiable :</p>
+      <h3>Terminaisons masculines</h3>
+      <div class="rule-table-wrap">
+        <table class="rule-table">
+          <thead><tr><th>Terminaison</th><th>Exemple</th><th>Exception</th></tr></thead>
+          <tbody>
+            <tr><td>-é</td><td>le café</td><td>la clé</td></tr>
+            <tr><td>-eur (machine)</td><td>un ordinateur</td><td>—</td></tr>
+            <tr><td>-phone</td><td>le téléphone</td><td>—</td></tr>
+            <tr><td>-scope</td><td>le microscope</td><td>—</td></tr>
+            <tr><td>-isme</td><td>le tourisme</td><td>—</td></tr>
+            <tr><td>-age</td><td>le village</td><td>la page, la plage, une image</td></tr>
+            <tr><td>-ède / -ège / -ème</td><td>le siège, le problème</td><td>la crème</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <h3>Terminaisons féminines</h3>
+      <div class="rule-table-wrap">
+        <table class="rule-table">
+          <thead><tr><th>Terminaison</th><th>Exemple</th></tr></thead>
+          <tbody>
+            <tr><td>-tion / -sion</td><td>la solution</td></tr>
+            <tr><td>-ison</td><td>la maison</td></tr>
+            <tr><td>-té / -tié</td><td>la santé</td></tr>
+            <tr><td>-eur (pas une machine)</td><td>la couleur, la fleur</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="self-check">
+        <div class="q">Le ou la — « société », « village », « microscope », « plage » ?</div>
+        <button class="reveal-btn">Voir la réponse</button>
+        <div class="answer">la société · le village · le microscope · la plage</div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Devine le genre</h2>
+      <p>Choisis le ou la pour chaque nom.</p>
+      <div id="gender-drills"></div>
+    </section>
+
+    <section>
+      <h2>Les articles</h2>
+      <ul>
+        <li><strong>un</strong> = masculin, <strong>une</strong> = féminin, <strong>des</strong> = pluriel (les deux genres)</li>
+        <li><strong>le</strong> = masculin, <strong>la</strong> = féminin, <strong>les</strong> = pluriel (les deux genres)</li>
+        <li><strong>le/la → l'</strong> devant une voyelle ou un H muet : l'hôtel, l'escargot</li>
+      </ul>
+      <div class="self-check">
+        <div class="q">« The hotel » et « a hospital » en français ?</div>
+        <button class="reveal-btn">Voir la réponse</button>
+        <div class="answer">l'hôtel · un hôpital</div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Le pluriel des noms</h2>
+      <ul>
+        <li>Par défaut : + s (un ami → des amis)</li>
+        <li>Déjà en s/x/z : pas de changement (un français → des français)</li>
+        <li>-al → -aux (un cheval → des chevaux)</li>
+        <li>-eau / -eu / -au → + x (un bateau → des bateaux)</li>
+        <li>-ou → + s, sauf bijou, caillou, chou, genou, hibou, joujou, pou → + x</li>
+        <li>Irréguliers : un œil → des yeux, monsieur → messieurs</li>
+        <li>Certains noms n'existent qu'au pluriel : des gens, des vacances, les mathématiques</li>
+      </ul>
+      <div class="self-check">
+        <div class="q">Pluriel de « un journal », « un jeu », « un genou » ?</div>
+        <button class="reveal-btn">Voir la réponse</button>
+        <div class="answer">des journaux · des jeux · des genoux</div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Trouve le pluriel</h2>
+      <p>Choisis la bonne forme au pluriel.</p>
+      <div id="plural-drills"></div>
+    </section>
+
   </main>
+  <div class="foot-note">Les fiches « Masculin ou féminin ? » et « Remplir avec: le, la, l' » de tes notes de cours restent la meilleure pratique complémentaire à ces exercices.</div>
 </div>
 <script src="../js/voice.js"></script>
 <script src="../js/nav.js"></script>
+<script src="../js/interactive.js"></script>
+<script src="js/app.js"></script>
 </body>
 </html>
