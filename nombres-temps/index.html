@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nombres & Temps — French Learning Hub</title>
+<title>Nombres &amp; Temps — French Learning Hub</title>
 <link rel="stylesheet" href="../css/styles.css">
 <link rel="stylesheet" href="../css/nav.css">
 </head>
@@ -13,21 +13,57 @@
 <div class="wrap">
   <header class="hero">
     <div class="title-row">
-      <h1>Nombres & Temps</h1>
+      <h1>Nombres &amp; Temps</h1>
     </div>
-    <div class="subtitle">Module 9</div>
-    <div class="intro">Jours, mois, saisons et les nombres de 1 à 100.</div>
+    <div class="subtitle">Module 9 · Jours, mois, saisons et les nombres de 1 à 100</div>
+    <div class="intro">Touche 🔊 pour entendre n'importe quel mot ou nombre. La zone 70–99 a sa propre logique — regarde bien l'explication avant de commencer le quiz.</div>
+    <div class="voice-warning" id="voiceWarning">La lecture vocale n'est pas prise en charge par ce navigateur.</div>
   </header>
   <main>
-    <div class="stub-card">
-      <p><strong>Contenu à venir.</strong></p>
-      <p>Jours, mois, saisons et les nombres de 1 à 100.</p>
-      <p>Suivi dans <a href="https://github.com/machismoarthub79-ops/French-learning-hub/issues/6">l'issue #6</a>.</p>
-      <p><a href="../index.html">&larr; Retour à l'accueil</a></p>
-    </div>
+
+    <section>
+      <h2>Les jours</h2>
+      <p>Toujours en minuscules, toujours masculins.</p>
+      <div id="days-list" class="word-list"></div>
+    </section>
+
+    <section>
+      <h2>Les mois</h2>
+      <div id="months-list" class="word-list"></div>
+    </section>
+
+    <section>
+      <h2>Les saisons</h2>
+      <p>Chaque saison a sa propre préposition — apprends-les ensemble, pas séparément.</p>
+      <div id="seasons-list" class="word-list"></div>
+    </section>
+
+    <section>
+      <h2>Les nombres de 1 à 100</h2>
+      <div class="trap">
+        <strong>La zone 70–99 n'est pas régulière :</strong>
+        soixante-dix = 60 + 10 (70) · quatre-vingt = 4 × 20 (80) · quatre-vingt-dix = 4 × 20 + 10 (90).
+      </div>
+      <div id="numbers-grid" class="number-grid"></div>
+      <div class="self-check">
+        <div class="q">Dis 71, 80, 95 à voix haute en français.</div>
+        <button class="reveal-btn">Voir la réponse</button>
+        <div class="answer">soixante et onze · quatre-vingts · quatre-vingt-quinze</div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Quiz — écris le nombre en lettres</h2>
+      <p>Un chiffre s'affiche, choisis la bonne orthographe. Le quiz insiste sur la zone 70–99.</p>
+      <div id="number-drills"></div>
+    </section>
+
   </main>
+  <div class="foot-note">Relis la zone 70–99 à voix haute chaque jour cette semaine — c'est la partie du module la plus facile à mélanger.</div>
 </div>
 <script src="../js/voice.js"></script>
 <script src="../js/nav.js"></script>
+<script src="../js/interactive.js"></script>
+<script src="js/app.js"></script>
 </body>
 </html>
