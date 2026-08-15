@@ -24,6 +24,31 @@
     document.documentElement.style.setProperty('--nav-height', mount.offsetHeight + 'px');
   }
 
+  var SPEEDS = [1, 0.75, 0.5];
+
+  // The audio-speed control affects every speak button on every page (via
+  // Voice.setRate, which now persists to localStorage itself), so it lives
+  // once in the shared nav instead of being duplicated per tab.
+  function speedButtonsHTML() {
+    var supported = typeof Voice !== 'undefined';
+    var current = supported ? Voice.getRate() : 1;
+    return SPEEDS.map(function (rate) {
+      var cls = 'nav-speed-btn' + (rate === current ? ' active' : '');
+      return '<button type="button" class="' + cls + '" data-speed="' + rate + '">' + rate + 'x</button>';
+    }).join('');
+  }
+
+  function wireSpeedButtons(mount) {
+    if (typeof Voice === 'undefined') return;
+    var buttons = mount.querySelectorAll('.nav-speed-btn');
+    buttons.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        Voice.setRate(parseFloat(btn.getAttribute('data-speed')));
+        buttons.forEach(function (b) { b.classList.toggle('active', b === btn); });
+      });
+    });
+  }
+
   function render() {
     var mount = document.getElementById('site-nav');
     if (!mount) return;
@@ -39,11 +64,14 @@
     mount.innerHTML =
       '<div class="nav-wrap">' +
         '<a class="nav-brand" href="' + base + 'index.html">French Learning Hub</a>' +
+        '<div class="nav-speed" role="group" aria-label="Vitesse audio">' + speedButtonsHTML() + '</div>' +
         '<button class="nav-toggle" id="navToggle" aria-label="Menu" aria-expanded="false">' +
           '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>' +
         '</button>' +
         '<nav class="nav-links" id="navLinks">' + links + '</nav>' +
       '</div>';
+
+    wireSpeedButtons(mount);
 
     var toggle = document.getElementById('navToggle');
     var navLinks = document.getElementById('navLinks');

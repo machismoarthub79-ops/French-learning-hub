@@ -7,7 +7,15 @@
 var Voice = (function () {
   var SPEAKER_SVG = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M11 5 6 9H2v6h4l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M18 6a9 9 0 0 1 0 12" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.6"/></svg>';
 
+  var RATE_STORAGE_KEY = 'voice:rate';
+  var VALID_RATES = [1, 0.75, 0.5];
+
   var playbackRate = 1;
+  try {
+    var savedRate = parseFloat(localStorage.getItem(RATE_STORAGE_KEY));
+    if (VALID_RATES.indexOf(savedRate) !== -1) playbackRate = savedRate;
+  } catch (e) {}
+
   var frVoice = null;
   var voicesChecked = false; // true once we've looked at a non-empty voice list at least once
 
@@ -48,6 +56,7 @@ var Voice = (function () {
 
   function setRate(rate) {
     playbackRate = rate;
+    try { localStorage.setItem(RATE_STORAGE_KEY, rate); } catch (e) {}
   }
 
   function getRate() {
