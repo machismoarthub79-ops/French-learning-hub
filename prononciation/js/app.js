@@ -13,25 +13,26 @@
     ['X','eeks','iks'], ['Y','eeh-greyk','i grec'], ['Z','zed','zède']
   ];
 
-  var DESPOTIX_WORDS = ['canard', 'Paris', 'beaucoup', 'chocolat', 'prix', 'riz'];
-  var H_WORDS = ['homme', 'hôpital', 'hôtel'];
-  var S_WORDS = ['maison', 'chose'];
-  var C_K_WORDS = ['cadeau', 'comme', 'cube'];
-  var C_S_WORDS = ['ceci', 'cinéma'];
-  var C_CEDILLE_WORDS = ['ça', 'français'];
-  var CH_SH_WORDS = ['chat', 'chien'];
-  var CH_K_WORDS = ['Christian', 'écho'];
-  var QU_WORDS = ['quatre', 'quel', 'qui'];
+  var DESPOTIX_WORDS = [['canard', 'duck'], ['Paris', 'Paris'], ['beaucoup', 'a lot'], ['chocolat', 'chocolate'], ['prix', 'price'], ['riz', 'rice']];
+  var H_WORDS = [['homme', 'man'], ['hôpital', 'hospital'], ['hôtel', 'hotel']];
+  var S_WORDS = [['maison', 'house'], ['chose', 'thing']];
+  var C_K_WORDS = [['cadeau', 'gift'], ['comme', 'like/as'], ['cube', 'cube']];
+  var C_S_WORDS = [['ceci', 'this'], ['cinéma', 'cinema']];
+  var C_CEDILLE_WORDS = [['ça', 'that/this'], ['français', 'French']];
+  var CH_SH_WORDS = [['chat', 'cat'], ['chien', 'dog']];
+  var CH_K_WORDS = [['Christian', 'Christian (name)'], ['écho', 'echo']];
+  var QU_WORDS = [['quatre', 'four'], ['quel', 'which'], ['qui', 'who']];
 
   var NASAL_GROUPS = [
-    { pattern: 'am / an / em / en', words: ['maman', 'quand', 'temps'] },
-    { pattern: 'om / on', words: ['bonjour', 'nom'] },
-    { pattern: 'im / in / ain / aim', words: ['matin', 'pain', 'faim'] },
-    { pattern: 'um / un', words: ['un', 'parfum'] }
+    { pattern: 'am / an / em / en', words: [['maman', 'mom'], ['quand', 'when'], ['temps', 'time/weather']] },
+    { pattern: 'om / on', words: [['bonjour', 'hello'], ['nom', 'name']] },
+    { pattern: 'im / in / ain / aim', words: [['matin', 'morning'], ['pain', 'bread'], ['faim', 'hunger']] },
+    { pattern: 'um / un', words: [['un', 'a/one'], ['parfum', 'perfume']] }
   ];
 
-  function wordChip(word) {
-    return '<span class="word-chip"><span>' + Voice.escapeHtml(word) + '</span>' + Voice.button('speak-btn small', word) + '</span>';
+  function wordChip(pair) {
+    var word = pair[0], en = pair[1];
+    return '<span class="word-chip"><span>' + Voice.escapeHtml(word) + ' <span class="note">(' + Voice.escapeHtml(en) + ')</span></span>' + Voice.button('speak-btn small', word) + '</span>';
   }
 
   function wordList(words) {
