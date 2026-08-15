@@ -243,7 +243,7 @@
     background:var(--card);border:1px solid var(--line);border-radius:999px;
     padding:5px 6px 5px 13px;font-size:13px;
   }
-  .word-chip .note{color:var(--ink-soft);font-size:11px;margin-left:2px;}
+  .note{color:var(--ink-soft);font-size:11px;font-weight:400;margin-left:2px;}
   .speak-btn.small,.word-chip button{width:22px;height:22px;}
   .speak-btn.small svg,.word-chip button svg{width:11px;height:11px;}
 
