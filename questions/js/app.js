@@ -1,29 +1,29 @@
   var EXAMPLE_SENTENCES = [
-    'Est-ce que tu as faim ?',
-    "Qu'est-ce que tu veux ?",
-    'Où est le jardin ?',
-    'Qui est ton frère ?',
-    'Comment ça va ?',
-    'Quand est ton anniversaire ?',
-    'Pourquoi es-tu en retard ?',
-    'Combien ça coûte ?',
-    "Quelle heure est-il ?"
+    ['Est-ce que tu as faim ?', 'Are you hungry?'],
+    ["Qu'est-ce que tu veux ?", 'What do you want?'],
+    ['Où est le jardin ?', 'Where is the garden?'],
+    ['Qui est ton frère ?', 'Who is your brother?'],
+    ['Comment ça va ?', "How's it going?"],
+    ['Quand est ton anniversaire ?', 'When is your birthday?'],
+    ['Pourquoi es-tu en retard ?', 'Why are you late?'],
+    ['Combien ça coûte ?', 'How much does it cost?'],
+    ["Quelle heure est-il ?", 'What time is it?']
   ];
 
   // Nouns covering all four quel/quelle/quels/quelles forms.
   var QUEL_DRILLS = [
-    { noun: 'heure', answer: 'quelle', explain: 'heure est féminin singulier.' },
-    { noun: 'prix', answer: 'quel', explain: 'prix est masculin singulier.' },
-    { noun: 'jours', answer: 'quels', explain: 'jours est masculin pluriel.' },
-    { noun: 'couleurs', answer: 'quelles', explain: 'couleurs est féminin pluriel.' },
-    { noun: 'adresse', answer: 'quelle', explain: 'adresse est féminin singulier.' },
-    { noun: 'nom', answer: 'quel', explain: 'nom est masculin singulier.' },
-    { noun: 'livres', answer: 'quels', explain: 'livres est masculin pluriel.' },
-    { noun: 'vacances', answer: 'quelles', explain: 'vacances est féminin pluriel.' },
-    { noun: 'âge', answer: 'quel', explain: 'âge est masculin singulier.' },
-    { noun: 'ville', answer: 'quelle', explain: 'ville est féminin singulier.' },
-    { noun: 'amis', answer: 'quels', explain: 'amis est masculin pluriel.' },
-    { noun: 'saisons', answer: 'quelles', explain: 'saisons est féminin pluriel.' }
+    { noun: 'heure', en: 'hour', answer: 'quelle', explain: 'heure est féminin singulier.' },
+    { noun: 'prix', en: 'price', answer: 'quel', explain: 'prix est masculin singulier.' },
+    { noun: 'jours', en: 'days', answer: 'quels', explain: 'jours est masculin pluriel.' },
+    { noun: 'couleurs', en: 'colors', answer: 'quelles', explain: 'couleurs est féminin pluriel.' },
+    { noun: 'adresse', en: 'address', answer: 'quelle', explain: 'adresse est féminin singulier.' },
+    { noun: 'nom', en: 'name', answer: 'quel', explain: 'nom est masculin singulier.' },
+    { noun: 'livres', en: 'books', answer: 'quels', explain: 'livres est masculin pluriel.' },
+    { noun: 'vacances', en: 'vacation', answer: 'quelles', explain: 'vacances est féminin pluriel.' },
+    { noun: 'âge', en: 'age', answer: 'quel', explain: 'âge est masculin singulier.' },
+    { noun: 'ville', en: 'city', answer: 'quelle', explain: 'ville est féminin singulier.' },
+    { noun: 'amis', en: 'friends', answer: 'quels', explain: 'amis est masculin pluriel.' },
+    { noun: 'saisons', en: 'seasons', answer: 'quelles', explain: 'saisons est féminin pluriel.' }
   ];
 
   // English prompt -> a model answer (self-graded: compare your own attempt
@@ -50,8 +50,9 @@
     { en: 'Which restaurant do you prefer?', fr: 'Quel restaurant préfères-tu ?' }
   ];
 
-  function wordChip(word) {
-    return '<span class="word-chip"><span>' + Voice.escapeHtml(word) + '</span>' + Voice.button('speak-btn small', word) + '</span>';
+  function wordChip(pair) {
+    var fr = pair[0], en = pair[1];
+    return '<span class="word-chip"><span>' + Voice.escapeHtml(fr) + ' <span class="note">(' + Voice.escapeHtml(en) + ')</span></span>' + Voice.button('speak-btn small', fr) + '</span>';
   }
 
   function quelDrillHTML(item) {
@@ -60,7 +61,7 @@
       return '<button class="drill-option" data-choice="' + opt + '">' + opt + '</button>';
     }).join('');
     return '<div class="drill" data-answer="' + item.answer + '" data-explain="' + Voice.escapeHtml(item.explain) + '">' +
-      '<div class="prompt">' + Voice.escapeHtml(item.noun) + '</div>' +
+      '<div class="prompt">' + Voice.escapeHtml(item.noun) + ' <span class="note">(' + Voice.escapeHtml(item.en) + ')</span></div>' +
       '<div class="drill-options">' + buttons + '</div>' +
       '<div class="drill-feedback"></div>' +
     '</div>';
