@@ -1,9 +1,16 @@
+  // Third field is the letter's actual French name, spelled as a real French
+  // word — this is what gets sent to speech synthesis. A bare single Latin
+  // character (e.g. "W") has no reliable French pronunciation a TTS engine
+  // can infer on its own; some letters (W = "double vé", Y = "i grec") bear
+  // no resemblance at all to the character and can only come out right if
+  // the actual name is spoken. The second field (English-style phonetic
+  // hint, e.g. "doo-blay-vay") is unchanged and only for on-screen reading.
   var ALPHABET = [
-    ['A','ah'], ['B','bay'], ['C','say'], ['D','day'], ['E','euh'], ['F','eff'],
-    ['G','jeh'], ['H','ash'], ['I','eeh'], ['J','jee'], ['K','kah'], ['L','ell'],
-    ['M','emm'], ['N','enn'], ['O','oh'], ['P','pay'], ['Q','ku'], ['R','air'],
-    ['S','ess'], ['T','tay'], ['U','uuh'], ['V','vay'], ['W','doo-blay-vay'],
-    ['X','eeks'], ['Y','eeh-greyk'], ['Z','zed']
+    ['A','ah','a'], ['B','bay','bé'], ['C','say','cé'], ['D','day','dé'], ['E','euh','euh'], ['F','eff','effe'],
+    ['G','jeh','gé'], ['H','ash','hache'], ['I','eeh','i'], ['J','jee','ji'], ['K','kah','ka'], ['L','ell','elle'],
+    ['M','emm','emme'], ['N','enn','enne'], ['O','oh','o'], ['P','pay','pé'], ['Q','ku','ku'], ['R','air','erre'],
+    ['S','ess','esse'], ['T','tay','té'], ['U','uuh','u'], ['V','vay','vé'], ['W','doo-blay-vay','double vé'],
+    ['X','eeks','iks'], ['Y','eeh-greyk','i grec'], ['Z','zed','zède']
   ];
 
   var DESPOTIX_WORDS = ['canard', 'Paris', 'beaucoup', 'chocolat', 'prix', 'riz'];
@@ -32,8 +39,8 @@
   }
 
   function letterChip(pair) {
-    var letter = pair[0], phon = pair[1];
-    return '<div class="letter-chip"><span class="letter">' + letter + '</span><span class="phon">[' + phon + ']</span>' + Voice.button('speak-btn small', letter) + '</div>';
+    var letter = pair[0], phon = pair[1], speakAs = pair[2];
+    return '<div class="letter-chip"><span class="letter">' + letter + '</span><span class="phon">[' + phon + ']</span>' + Voice.button('speak-btn small', speakAs) + '</div>';
   }
 
   function nasalGroupHTML(group) {
