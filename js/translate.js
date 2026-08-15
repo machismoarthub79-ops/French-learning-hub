@@ -71,8 +71,23 @@
     }).then(function (data) {
       var text = data && data.responseData && data.responseData.translatedText;
       if (!text || /MYMEMORY WARNING/i.test(text)) throw new Error('no usable translation');
-      return text;
+      return decodeHtmlEntities(text);
     });
+  }
+
+  // MyMemory's French results often carry a non-breaking space before
+  // ?/!/:/; (required by French typography) HTML-entity-encoded inside the
+  // JSON string itself — e.g. the literal text "est-il&#xA0;?" — rather
+  // than as a real character. Assigning that straight to a <textarea>.value
+  // doesn't decode entities (it's not an HTML-parsing context), so it would
+  // show up on screen exactly as typed. Routing it through a throwaway
+  // <textarea>'s innerHTML forces the browser's own HTML parser to decode
+  // it, without the injection risk innerHTML would carry on an element that
+  // actually renders markup.
+  function decodeHtmlEntities(text) {
+    var el = document.createElement('textarea');
+    el.innerHTML = text;
+    return el.value;
   }
 
   function escapeHtml(s) {
