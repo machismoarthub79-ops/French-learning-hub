@@ -24,6 +24,8 @@
         <button class="cat-ER" data-cat="ER">-er</button>
         <button class="cat-IR" data-cat="IR">-ir</button>
         <button class="cat-RE" data-cat="RE">-re / irr.</button>
+        <button class="cat-OIR" data-cat="OIR">-oir</button>
+        <button class="cat-PRONOM" data-cat="PRONOM">pronom.</button>
       </div>
     </div>
     <div class="row">
@@ -47,6 +49,17 @@
     <div class="voice-warning" id="voiceWarning">La lecture vocale n'est pas prise en charge par ce navigateur.</div>
   </header>
   <main>
+    <div class="trap"><strong>Deux verbes à la suite</strong> — seul le premier est conjugué : je ne peux pas venir (pas « peux venir »).</div>
+    <div class="self-check">
+      <div class="q">« I want to sleep » / « You have to wait » / « She can come. »</div>
+      <button class="reveal-btn">Voir la réponse</button>
+      <div class="answer">Je veux dormir. · Tu dois attendre. · Elle peut venir.</div>
+    </div>
+    <div class="self-check">
+      <div class="q">Conjugue « s'amuser » entièrement, et traduis « They call each other. »</div>
+      <button class="reveal-btn">Voir la réponse</button>
+      <div class="answer">je m'amuse · tu t'amuses · il/elle/on s'amuse · nous nous amusons · vous vous amusez · ils/elles s'amusent — « Ils s'appellent. »</div>
+    </div>
     <div id="cards"></div>
   </main>
   <div class="foot-note">Touchez 🔊 pour entendre la prononciation. Choisis une catégorie ou reste en mode Aléatoire. Ferme et rouvre pour un nouveau tirage — ou touche « Mélanger ».</div>
@@ -54,8 +67,10 @@
 <script src="../js/voice.js"></script>
 <script src="../js/nav.js"></script>
 <script src="../js/translate.js"></script>
+<script src="../js/interactive.js"></script>
 <script src="js/data/verbs.js"></script>
 <script src="js/data/sentences.js"></script>
+<script src="js/data/pronominal.js"></script>
 <script src="js/app.js"></script>
 </body>
 </html>
