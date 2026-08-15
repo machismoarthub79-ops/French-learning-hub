@@ -147,7 +147,7 @@
   function savePrefs(){
     try {
       if (window.storage && window.storage.set) {
-        window.storage.set('verbeDuJour:prefs', JSON.stringify({c: wordsPerDay, cat: category, rate: Voice.getRate()}), false).catch(function(){});
+        window.storage.set('verbeDuJour:prefs', JSON.stringify({c: wordsPerDay, cat: category}), false).catch(function(){});
       }
     } catch(e) {}
   }
@@ -163,12 +163,6 @@
             var p2 = JSON.parse(res.value);
             if (p2.c === 10 || p2.c === 20) wordsPerDay = p2.c;
             if (p2.cat && CAT_NAMES[p2.cat]) category = p2.cat;
-            if (p2.rate === 1 || p2.rate === 0.75 || p2.rate === 0.5) {
-              Voice.setRate(p2.rate);
-              document.querySelectorAll('.speed-btn').forEach(function(btn){
-                btn.classList.toggle('active', parseFloat(btn.getAttribute('data-speed')) === p2.rate);
-              });
-            }
             pickSet(); render();
           }
         }).catch(function(){});
@@ -191,16 +185,6 @@
       btn.addEventListener('click', function(){
         category = btn.getAttribute('data-cat');
         reshuffle(); savePrefs();
-      });
-    });
-
-    document.querySelectorAll('.speed-btn').forEach(function(btn){
-      btn.addEventListener('click', function(){
-        Voice.setRate(parseFloat(btn.getAttribute('data-speed')));
-        document.querySelectorAll('.speed-btn').forEach(function(b){
-          b.classList.toggle('active', b === btn);
-        });
-        savePrefs();
       });
     });
 
