@@ -124,6 +124,38 @@
   transition: transform .12s;
 }
 .translate-go-btn:active { transform: scale(0.97); }
+.translate-go-btn:disabled { opacity: .6; cursor: not-allowed; transform: none; }
+
+.translate-result {
+  width: 100%;
+  padding: 9px 11px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  font-family: 'Work Sans', sans-serif;
+  font-size: 13.5px;
+  background: rgba(36,48,61,0.03);
+  color: var(--ink);
+  resize: vertical;
+  min-height: 2.6em;
+}
+.translate-result:focus { outline: none; }
+
+.translate-source-note {
+  font-size: 10.5px;
+  color: var(--ink-soft);
+  font-style: italic;
+  margin-top: -4px;
+}
+
+.translate-error {
+  font-size: 12px;
+  color: var(--accent);
+  background: var(--accent-bg);
+  border-radius: 8px;
+  padding: 8px 10px;
+  line-height: 1.5;
+}
+.translate-error a { color: var(--accent); font-weight: 600; }
 
 @media (max-width: 400px) {
   .translate-bubble { right: 12px; bottom: 16px; }
