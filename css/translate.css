@@ -80,8 +80,14 @@
   justify-content: center;
 }
 
+.translate-input-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
 .translate-input {
-  width: 100%;
+  flex: 1;
+  min-width: 0;
   padding: 9px 11px;
   border: 1px solid var(--line);
   border-radius: 8px;
@@ -91,6 +97,7 @@
   color: var(--ink);
 }
 .translate-input:focus { outline: 2px solid var(--accent-bg); border-color: var(--accent); }
+.translate-input-row .speak-btn.small { flex-shrink: 0; }
 
 .translate-local-match {
   display: none;
@@ -110,6 +117,7 @@
   color: var(--accent);
   margin-right: 4px;
 }
+.translate-local-match .speak-btn.small { vertical-align: middle; margin-left: 2px; }
 
 .translate-go-btn {
   padding: 9px 12px;
@@ -126,8 +134,14 @@
 .translate-go-btn:active { transform: scale(0.97); }
 .translate-go-btn:disabled { opacity: .6; cursor: not-allowed; transform: none; }
 
+.translate-result-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
 .translate-result {
-  width: 100%;
+  flex: 1;
+  min-width: 0;
   padding: 9px 11px;
   border: 1px solid var(--line);
   border-radius: 8px;
@@ -139,6 +153,7 @@
   min-height: 2.6em;
 }
 .translate-result:focus { outline: none; }
+.translate-result-row .speak-btn.small { flex-shrink: 0; margin-top: 4px; }
 
 .translate-source-note {
   font-size: 10.5px;
