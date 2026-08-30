@@ -24,6 +24,35 @@
     document.documentElement.style.setProperty('--nav-height', mount.offsetHeight + 'px');
   }
 
+  // Theme: dark by default, switchable to light via the nav toggle.
+  // A tiny inline script in each page's <head> already applies the stored
+  // preference to <html data-theme> before first paint, so this module just
+  // has to render the button and flip the attribute (+ localStorage) on click.
+  var SUN_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>';
+  var MOON_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
+
+  function currentTheme() {
+    return document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
+  }
+
+  function setThemeToggleIcon(btn, theme) {
+    // Icon shows the theme a click will switch *to*.
+    btn.innerHTML = theme === 'light' ? MOON_ICON : SUN_ICON;
+    btn.setAttribute('aria-label', theme === 'light' ? 'Passer au thème sombre' : 'Passer au thème clair');
+  }
+
+  function wireThemeToggle(mount) {
+    var btn = mount.querySelector('.theme-toggle');
+    if (!btn) return;
+    setThemeToggleIcon(btn, currentTheme());
+    btn.addEventListener('click', function () {
+      var next = currentTheme() === 'light' ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', next);
+      try { localStorage.setItem('theme', next); } catch (e) {}
+      setThemeToggleIcon(btn, next);
+    });
+  }
+
   var SPEEDS = [1, 0.75, 0.5];
 
   // The audio-speed control affects every speak button on every page (via
@@ -65,6 +94,7 @@
       '<div class="nav-wrap">' +
         '<a class="nav-brand" href="' + base + 'index.html">French Learning Hub</a>' +
         '<div class="nav-speed" role="group" aria-label="Vitesse audio">' + speedButtonsHTML() + '</div>' +
+        '<button type="button" class="theme-toggle"></button>' +
         '<button class="nav-toggle" id="navToggle" aria-label="Menu" aria-expanded="false">' +
           '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>' +
         '</button>' +
@@ -72,6 +102,7 @@
       '</div>';
 
     wireSpeedButtons(mount);
+    wireThemeToggle(mount);
 
     var toggle = document.getElementById('navToggle');
     var navLinks = document.getElementById('navLinks');
