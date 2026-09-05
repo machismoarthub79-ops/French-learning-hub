@@ -15,6 +15,7 @@
     --oir:#B48BD0;
     --pronom:#E28FB3;
     --pronom-rgb:226,143,179;
+    --irr:#5FB0BA;
     --ink-rgb:236,234,228;
     --line:rgba(var(--ink-rgb),0.14);
     --warn:#E0A934;
@@ -37,6 +38,7 @@
     --oir:#8B5FA8;
     --pronom:#C9638F;
     --pronom-rgb:201,99,143;
+    --irr:#3C8C96;
     --ink-rgb:36,48,61;
     --line:rgba(var(--ink-rgb),0.14);
     --warn:#B2790A;
@@ -80,6 +82,9 @@
   .seg button.cat-RE.active{background:var(--re);}
   .seg button.cat-OIR.active{background:var(--oir);}
   .seg button.cat-PRONOM.active{background:var(--pronom);}
+  .seg button.cat-ETRE.active{background:var(--oir);}
+  .seg button.cat-REFL.active{background:var(--pronom);}
+  .seg button.cat-IRR.active{background:var(--irr);}
   .shuffle-btn{
     margin-left:auto;display:flex;align-items:center;gap:6px;
     padding:8px 16px;border-radius:999px;border:1.5px dashed var(--accent);
@@ -109,6 +114,7 @@
   }
   .stamp.ER{color:var(--er);} .stamp.IR{color:var(--ir);} .stamp.RE{color:var(--re);}
   .stamp.OIR{color:var(--oir);} .stamp.PRONOM{color:var(--pronom);}
+  .stamp.ETRE{color:var(--oir);} .stamp.REFL{color:var(--pronom);} .stamp.IRR{color:var(--irr);}
   .pronom-type{
     display:inline-flex;align-items:center;gap:4px;
     font-size:10.5px;font-weight:700;color:var(--pronom);background:rgba(var(--pronom-rgb),0.1);
@@ -329,3 +335,36 @@
   .speak-btn:disabled,.speak-btn:disabled:active{opacity:.35;cursor:not-allowed;transform:none;}
   .save-note{font-size:11px;color:var(--ink-soft);margin-top:6px;opacity:0;transition:opacity .3s;}
   .save-note.visible{opacity:1;}
+
+  /* ---- temps-verbaux: "identifier un mot" lookup tool ---- */
+  .identify-row{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap;}
+  .identify-input{
+    flex:1;min-width:180px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;
+    font-family:'Work Sans',sans-serif;font-size:14px;background:var(--card);color:var(--ink);
+  }
+  .identify-input:focus{outline:2px solid var(--accent-bg);border-color:var(--accent);}
+  .identify-btn{
+    padding:10px 18px;border-radius:10px;border:none;background:var(--accent);color:var(--card);
+    font-weight:700;font-size:13px;font-family:'Work Sans',sans-serif;cursor:pointer;transition:transform .12s;
+  }
+  .identify-btn:active{transform:scale(0.96);}
+  .identify-hint{color:var(--ink-soft);font-size:12px;margin-top:8px;line-height:1.5;}
+  .identify-result{margin-top:14px;}
+  .identify-empty{color:var(--ink-soft);font-size:13px;font-style:italic;}
+  .identify-card{background:var(--card);border:1px solid var(--accent);border-radius:14px;padding:16px;margin-bottom:12px;}
+  .identify-head{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;}
+  .identify-phrase{font-family:'Fraunces',serif;font-weight:600;font-size:19px;}
+  .identify-meta{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;}
+  .identify-tag{
+    font-size:10.5px;font-weight:700;letter-spacing:.02em;text-transform:uppercase;
+    padding:3px 8px;border-radius:5px;background:var(--accent-bg);color:var(--accent);
+  }
+  .identify-meaning{color:var(--ink-soft);font-size:13.5px;margin-top:8px;}
+  .identify-note{color:var(--ink-soft);font-size:12px;margin-top:6px;font-style:italic;}
+  .identify-suggestions{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;}
+  .identify-chip{
+    padding:6px 12px;border-radius:999px;border:1px solid var(--line);background:transparent;
+    color:var(--ink);font-size:12.5px;font-family:'Work Sans',sans-serif;cursor:pointer;
+  }
+  .identify-chip:hover{background:rgba(var(--ink-rgb),0.06);}
+  .identify-card .conj-block{margin-top:12px;}
