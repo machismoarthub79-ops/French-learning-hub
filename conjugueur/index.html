@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<script id="theme-init">(function(){try{if(localStorage.getItem("theme")==="light")document.documentElement.setAttribute("data-theme","light");}catch(e){}})();</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Conjugueur — French Learning Hub</title>
+<link rel="stylesheet" href="../css/styles.css">
+<link rel="stylesheet" href="../css/nav.css">
+<link rel="stylesheet" href="../css/translate.css">
+</head>
+<body>
+<script>window.NAV_BASE = '../'; window.NAV_ACTIVE = 'conjugueur';</script>
+<div id="site-nav"></div>
+<div class="wrap">
+  <header class="hero">
+    <div class="title-row">
+      <h1>Conjugueur</h1>
+    </div>
+    <div class="subtitle">Bonus · Conjugaison complète, tous les temps</div>
+    <div class="intro">Tape n'importe quel verbe à l'infinitif (« danser », « finir », « se lever »…) pour voir sa conjugaison complète : indicatif, subjonctif, conditionnel, participe et impératif.</div>
+    <div class="voice-warning" id="voiceWarning">La lecture vocale n'est pas prise en charge par ce navigateur.</div>
+  </header>
+  <main>
+
+    <section>
+      <form id="conj-form" class="identify-row">
+        <input type="text" id="conj-input" class="identify-input" placeholder="ex. danser" autocomplete="off" value="danser">
+        <button type="submit" class="identify-btn">Conjuguer</button>
+      </form>
+      <div class="identify-hint">~70 verbes irréguliers courants sont vérifiés un par un (être, avoir, aller, faire, prendre, venir…). Tout autre verbe en -er/-ir/-re est conjugué par les règles régulières — fiable pour la grande majorité, mais pas garanti pour un verbe irrégulier rare qui ne figure pas encore dans la liste. Les verbes en -oir non répertoriés ne sont pas reconnus.</div>
+      <div id="conj-result"></div>
+    </section>
+
+  </main>
+  <div class="foot-note">Le moteur dérive la plupart des temps à partir du présent, du participe passé et d'un radical de futur — seuls ces éléments sont mémorisés pour chaque verbe irrégulier ; le reste (imparfait, subjonctif, composés…) est calculé par les règles de la grammaire française.</div>
+</div>
+<script src="../js/voice.js"></script>
+<script src="../js/nav.js"></script>
+<script src="../js/translate.js"></script>
+<script src="../js/interactive.js"></script>
+<script src="js/data/verbs.js"></script>
+<script src="js/engine.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
