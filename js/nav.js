@@ -12,7 +12,9 @@
     { id: 'nombres-temps', path: 'nombres-temps/index.html', label: 'Nombres & Temps' },
     { id: 'etre-avoir', path: 'etre-avoir/index.html', label: 'Être & Avoir' },
     { id: 'questions', path: 'questions/index.html', label: 'Questions' },
-    { id: 'lecture', path: 'lecture/index.html', label: 'Lecture' }
+    { id: 'lecture', path: 'lecture/index.html', label: 'Lecture' },
+    { id: 'temps-verbaux', path: 'temps-verbaux/index.html', label: 'Temps Verbaux' },
+    { id: 'conjugueur', path: 'conjugueur/index.html', label: 'Conjugueur' }
   ];
 
   // The nav bar is sticky (see css/nav.css), and every page's own <header> is

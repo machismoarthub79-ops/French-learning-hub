@@ -19,6 +19,8 @@ A small static site for working through a 16-module French curriculum (alphabet 
 /etre-avoir/              Module 10   — être & avoir + negation
 /questions/               Module 16   — interrogation
 /lecture/                 Bonus       — reading practice
+/temps-verbaux/           Bonus       — verb tenses, starting with the passé composé
+/conjugueur/              Bonus       — full-tense conjugator: any verb, every mood/tense
 ```
 
 Each tab is a self-contained `index.html` + page-specific JS/CSS (where needed), sharing the site-wide nav, design tokens, and voice module above. Tabs not yet built are simple "content pending" stub pages linking to their tracking issue, so the nav never 404s.
