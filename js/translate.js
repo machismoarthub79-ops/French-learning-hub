@@ -63,16 +63,47 @@
 
   // Rejects if MyMemory has nothing usable — including its own in-band
   // "you've used today's free quota" text, which otherwise looks like a
-  // normal (wrong) translation if not filtered out.
+  // normal (wrong) translation if not filtered out. The rejected error
+  // carries a `.reason` tag so the caller can show a message that actually
+  // matches what went wrong, instead of a one-size-fits-all "offline" line
+  // that's misleading when the real cause is a spent quota or a server error.
   function fetchTranslation(query) {
     return fetch(myMemoryUrl(query)).then(function (res) {
-      if (!res.ok) throw new Error('HTTP ' + res.status);
+      if (!res.ok) {
+        var httpErr = new Error('HTTP ' + res.status);
+        httpErr.reason = 'http';
+        throw httpErr;
+      }
       return res.json();
+    }, function (networkErr) {
+      networkErr.reason = 'network';
+      throw networkErr;
     }).then(function (data) {
       var text = data && data.responseData && data.responseData.translatedText;
-      if (!text || /MYMEMORY WARNING/i.test(text)) throw new Error('no usable translation');
+      if (text && /MYMEMORY WARNING/i.test(text)) {
+        var quotaErr = new Error('quota exceeded');
+        quotaErr.reason = 'quota';
+        throw quotaErr;
+      }
+      if (!text) {
+        var emptyErr = new Error('no usable translation');
+        emptyErr.reason = 'empty';
+        throw emptyErr;
+      }
       return decodeHtmlEntities(text);
     });
+  }
+
+  function errorMessage(err) {
+    switch (err && err.reason) {
+      case 'quota':
+        return "Le service de traduction gratuit (MyMemory) a atteint sa limite quotidienne d'utilisation.";
+      case 'http':
+      case 'empty':
+        return 'Le service de traduction est momentanément indisponible.';
+      default:
+        return 'Impossible de contacter le service de traduction (vérifie ta connexion).';
+    }
   }
 
   // MyMemory's French results often carry a non-breaking space before
@@ -227,10 +258,10 @@
       resultRow.style.display = 'flex';
       note.style.display = 'block';
       updateResultSpeakButton(root);
-    }).catch(function () {
+    }).catch(function (err) {
       if (myRequest !== requestSeq) return;
       errorBox.style.display = 'block';
-      errorBox.innerHTML = 'Impossible de récupérer la traduction (hors ligne, ou service indisponible). ' +
+      errorBox.innerHTML = errorMessage(err) + ' ' +
         '<a href="' + googleTranslateUrl(query) + '" target="_blank" rel="noopener">Ouvrir dans Google Translate ↗</a>';
     }).finally(function () {
       if (myRequest !== requestSeq) return;
