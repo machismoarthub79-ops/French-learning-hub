@@ -55,6 +55,39 @@
   var wordsPerDay = 10;
   var category = 'ALL';
   var currentSet = [];
+  var searchQuery = '';
+  var SEARCH_MIN_LENGTH = 2;
+  var SEARCH_MAX_RESULTS = 40;
+
+  function normalize(s){
+    return s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+  }
+
+  function isSearching(){
+    return searchQuery.trim().length >= SEARCH_MIN_LENGTH;
+  }
+
+  // Ranks infinitive-starts-with above infinitive-contains above an English
+  // meaning match, so typing "man" surfaces "manger" before an unrelated
+  // verb whose meaning happens to contain "man".
+  function searchResults(){
+    var q = normalize(searchQuery.trim());
+    var qRaw = searchQuery.trim().toLowerCase();
+    var matches = [];
+    pool().forEach(function(v){
+      var infNorm = normalize(v.i);
+      var rank = -1;
+      if (infNorm === q) rank = 0;
+      else if (infNorm.indexOf(q) === 0) rank = 1;
+      else if (infNorm.indexOf(q) !== -1) rank = 2;
+      else if (v.e.toLowerCase().indexOf(qRaw) !== -1) rank = 3;
+      if (rank !== -1) matches.push({v: v, rank: rank});
+    });
+    matches.sort(function(a, b){
+      return a.rank - b.rank || a.v.i.localeCompare(b.v.i);
+    });
+    return matches.map(function(m){ return m.v; });
+  }
 
   function shuffle(arr){
     var a = arr.slice();
@@ -129,9 +162,26 @@
   }
 
   function render(){
-    document.getElementById('cards').innerHTML = currentSet.map(cardHTML).join('');
-    document.getElementById('subtitle').textContent =
-      wordsPerDay + ' verbes · ' + CAT_NAMES[category] + ' · ' + weekdayFr();
+    var trimmed = searchQuery.trim();
+    document.getElementById('dailyControls').hidden = trimmed.length > 0;
+    document.getElementById('searchHint').hidden = trimmed.length === 0 || trimmed.length >= SEARCH_MIN_LENGTH;
+
+    if (isSearching()){
+      var results = searchResults();
+      document.getElementById('cards').innerHTML = results.slice(0, SEARCH_MAX_RESULTS).map(cardHTML).join('');
+      document.getElementById('subtitle').textContent = results.length === 0 ?
+        'Aucun résultat pour « ' + searchQuery.trim() + ' »' :
+        results.length + (results.length === 1 ? ' résultat' : ' résultats') + ' pour « ' + searchQuery.trim() + ' »' +
+        (results.length > SEARCH_MAX_RESULTS ? ' (affiche les ' + SEARCH_MAX_RESULTS + ' premiers)' : '');
+    } else if (trimmed.length === 0) {
+      document.getElementById('cards').innerHTML = currentSet.map(cardHTML).join('');
+      document.getElementById('subtitle').textContent =
+        wordsPerDay + ' verbes · ' + CAT_NAMES[category] + ' · ' + weekdayFr();
+    } else {
+      document.getElementById('cards').innerHTML = '';
+      document.getElementById('subtitle').textContent = 'Recherche…';
+    }
+
     document.getElementById('btn10').classList.toggle('active', wordsPerDay === 10);
     document.getElementById('btn20').classList.toggle('active', wordsPerDay === 20);
     document.querySelectorAll('[data-cat]').forEach(function(btn){
@@ -184,8 +234,24 @@
     document.querySelectorAll('[data-cat]').forEach(function(btn){
       btn.addEventListener('click', function(){
         category = btn.getAttribute('data-cat');
-        reshuffle(); savePrefs();
+        if (isSearching()) render(); else reshuffle();
+        savePrefs();
       });
+    });
+
+    var searchInput = document.getElementById('verbSearch');
+    var searchClear = document.getElementById('verbSearchClear');
+    searchInput.addEventListener('input', function(){
+      searchQuery = searchInput.value;
+      searchClear.hidden = searchQuery.length === 0;
+      render();
+    });
+    searchClear.addEventListener('click', function(){
+      searchQuery = '';
+      searchInput.value = '';
+      searchClear.hidden = true;
+      searchInput.focus();
+      render();
     });
 
     Voice.bindContainer(document.getElementById('cards'));

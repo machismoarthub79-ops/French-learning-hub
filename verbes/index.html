@@ -20,6 +20,12 @@
     <div class="subtitle" id="subtitle">— chargement —</div>
 
     <div class="row">
+      <div class="verb-search">
+        <input type="text" id="verbSearch" class="identify-input" placeholder="Rechercher un verbe… (ex. manger, to eat)" autocomplete="off">
+        <button type="button" id="verbSearchClear" class="verb-search-clear" aria-label="Effacer la recherche" hidden>&times;</button>
+      </div>
+    </div>
+    <div class="row">
       <div class="seg" role="group" aria-label="Catégorie">
         <button class="cat-ALL active" data-cat="ALL">Aléatoire</button>
         <button class="cat-ER" data-cat="ER">-er</button>
@@ -29,7 +35,7 @@
         <button class="cat-PRONOM" data-cat="PRONOM">pronom.</button>
       </div>
     </div>
-    <div class="row">
+    <div class="row" id="dailyControls">
       <div class="seg" role="group" aria-label="Mots par jour">
         <button id="btn10" data-count="10">10 mots</button>
         <button id="btn20" data-count="20">20 mots</button>
@@ -39,6 +45,7 @@
         Mélanger
       </button>
     </div>
+    <div class="verb-search-hint" id="searchHint" hidden>Tape au moins 2 lettres pour chercher.</div>
     <div class="legend"><span class="dot"></span> bordure = ne suit pas le patron régulier de son groupe</div>
     <div class="voice-warning" id="voiceWarning">La lecture vocale n'est pas prise en charge par ce navigateur.</div>
   </header>
@@ -56,7 +63,7 @@
     </div>
     <div id="cards"></div>
   </main>
-  <div class="foot-note">Touchez 🔊 pour entendre la prononciation. Choisis une catégorie ou reste en mode Aléatoire. Ferme et rouvre pour un nouveau tirage — ou touche « Mélanger ».</div>
+  <div class="foot-note">Touchez 🔊 pour entendre la prononciation. Cherche un verbe précis par nom (français) ou par sens (anglais), ou choisis une catégorie et reste en mode Aléatoire. Ferme et rouvre pour un nouveau tirage — ou touche « Mélanger ».</div>
 </div>
 <script src="../js/voice.js"></script>
 <script src="../js/nav.js"></script>
