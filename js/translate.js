@@ -272,6 +272,7 @@
 
   function init() {
     var root = build();
+    ClearableInput.wireAll(root);
     updateDirectionButtons(root);
     updateInputSpeakButton(root);
     Voice.bindContainer(root); // wires every current & future .speak-btn inside the widget

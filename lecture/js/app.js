@@ -129,6 +129,7 @@
   function init() {
     Voice.initWarning('voiceWarning');
     render();
+    ClearableInput.wireAll(document.getElementById('passages'));
     var container = document.getElementById('passages');
     Voice.bindContainer(container);
     container.addEventListener('input', handleInput);

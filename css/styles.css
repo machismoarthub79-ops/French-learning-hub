@@ -400,13 +400,17 @@
   }
 
   /* ---- verb list search box (verbes tab) ---- */
-  .verb-search{position:relative;flex:1;min-width:180px;}
-  .verb-search .identify-input{width:100%;box-sizing:border-box;padding-right:34px;}
-  .verb-search-clear{
+  .verb-search-hint{color:var(--ink-soft);font-size:12px;margin-top:6px;}
+
+  /* ---- generic clear ("×") button, added to every text input/textarea by js/clearable-input.js ---- */
+  .clearable-wrap{position:relative;display:block;flex:1;min-width:0;}
+  .clearable-wrap input,.clearable-wrap textarea{width:100%;box-sizing:border-box;padding-right:30px;}
+  .clearable-btn{
     position:absolute;right:6px;top:50%;transform:translateY(-50%);
-    width:24px;height:24px;border-radius:50%;border:none;background:rgba(var(--ink-rgb),0.08);
-    color:var(--ink-soft);font-size:15px;line-height:1;cursor:pointer;
+    width:22px;height:22px;border-radius:50%;border:none;background:rgba(var(--ink-rgb),0.08);
+    color:var(--ink-soft);font-size:15px;line-height:1;cursor:pointer;padding:0;
     display:flex;align-items:center;justify-content:center;
   }
-  .verb-search-clear:hover{background:rgba(var(--ink-rgb),0.14);}
-  .verb-search-hint{color:var(--ink-soft);font-size:12px;margin-top:6px;}
+  .clearable-wrap.is-textarea .clearable-btn{top:10px;transform:none;}
+  .clearable-btn:hover{background:rgba(var(--ink-rgb),0.16);color:var(--ink);}
+  .clearable-btn[hidden]{display:none;}
