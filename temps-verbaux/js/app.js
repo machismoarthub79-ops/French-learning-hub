@@ -252,6 +252,7 @@
       var chip = e.target.closest('[data-suggest]');
       if (!chip) return;
       input.value = chip.getAttribute('data-suggest');
+      input.dispatchEvent(new Event('input'));
       runIdentify(input.value);
     });
     runIdentify('');

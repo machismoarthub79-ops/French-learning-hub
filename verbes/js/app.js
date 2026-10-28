@@ -240,17 +240,8 @@
     });
 
     var searchInput = document.getElementById('verbSearch');
-    var searchClear = document.getElementById('verbSearchClear');
     searchInput.addEventListener('input', function(){
       searchQuery = searchInput.value;
-      searchClear.hidden = searchQuery.length === 0;
-      render();
-    });
-    searchClear.addEventListener('click', function(){
-      searchQuery = '';
-      searchInput.value = '';
-      searchClear.hidden = true;
-      searchInput.focus();
       render();
     });
 
