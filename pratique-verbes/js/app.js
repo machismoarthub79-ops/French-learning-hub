@@ -1,10 +1,14 @@
-// Verb practice: 5 multiple-choice questions (one per group: -er, -ir,
-// -re/irr., -oir, pronominal). Shows the French infinitive; the learner picks
+// Verb practice: 5 multiple-choice questions. "Aléatoire" draws one verb per
+// group (-er, -ir, -re/irr., -oir, pronominal); picking a group draws 5
+// different verbs from just that group. Shows the French infinitive; the learner picks
 // its English translation (the `e` field of the verbs data) from 4 options.
 (function () {
   var GROUPS = ['ER', 'IR', 'RE', 'OIR', 'PRONOM'];
   var ALL_VERBS = VERBS.concat(PRONOMINAL_VERBS);
   var NUM_OPTIONS = 4;
+  var NUM_QUESTIONS = 5;
+  var CAT_NAMES = {ALL:'Aléatoire', ER:'-er', IR:'-ir', RE:'-re / irr.', OIR:'-oir', PRONOM:'pronom.'};
+  var category = 'ALL';
   var questions = [];
   var correctCount = 0;
   var answeredCount = 0;
@@ -35,12 +39,24 @@
     return { verb: v, options: shuffle([v.e].concat(wrong)) };
   }
 
+  function pickVerbs() {
+    if (category === 'ALL') {
+      return shuffle(GROUPS).map(function (g) {
+        var pool = ALL_VERBS.filter(function (v) { return v.g === g; });
+        return pool[Math.floor(Math.random() * pool.length)];
+      });
+    }
+    return shuffle(ALL_VERBS.filter(function (v) { return v.g === category; })).slice(0, NUM_QUESTIONS);
+  }
+
   function newSet() {
-    questions = shuffle(GROUPS).map(function (g) {
-      var pool = ALL_VERBS.filter(function (v) { return v.g === g; });
-      return buildQuestion(pool[Math.floor(Math.random() * pool.length)]);
-    });
+    questions = pickVerbs().map(buildQuestion);
     correctCount = 0; answeredCount = 0;
+    document.querySelectorAll('[data-cat]').forEach(function (btn) {
+      btn.classList.toggle('active', btn.getAttribute('data-cat') === category);
+    });
+    document.getElementById('subtitle').textContent =
+      questions.length + ' questions · ' + CAT_NAMES[category] + ' · trouve la traduction anglaise';
     render();
   }
 
@@ -113,6 +129,12 @@
 
     Voice.bindContainer(quiz);
     document.getElementById('shuffleBtn').addEventListener('click', newSet);
+    document.querySelectorAll('[data-cat]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        category = btn.getAttribute('data-cat');
+        newSet();
+      });
+    });
     newSet();
   }
 
