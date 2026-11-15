@@ -6,6 +6,7 @@
   var NAV_ITEMS = [
     { id: 'home', path: 'index.html', label: 'Accueil' },
     { id: 'verbes', path: 'verbes/index.html', label: 'Verbes' },
+    { id: 'pratique-verbes', path: 'pratique-verbes/index.html', label: 'Pratique Verbes' },
     { id: 'prononciation', path: 'prononciation/index.html', label: 'Prononciation' },
     { id: 'noms-articles', path: 'noms-articles/index.html', label: 'Noms & Articles' },
     { id: 'adjectifs', path: 'adjectifs/index.html', label: 'Adjectifs' },
