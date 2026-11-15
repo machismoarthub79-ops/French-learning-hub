@@ -1,12 +1,12 @@
-// Verb practice: 5 multiple-choice questions. "Aléatoire" draws one verb per
-// group (-er, -ir, -re/irr., -oir, pronominal); picking a group draws 5
+// Verb practice: 10 multiple-choice questions. "Aléatoire" draws two verbs per
+// group (-er, -ir, -re/irr., -oir, pronominal); picking a group draws 10
 // different verbs from just that group. Shows the French infinitive; the learner picks
 // its English translation (the `e` field of the verbs data) from 4 options.
 (function () {
   var GROUPS = ['ER', 'IR', 'RE', 'OIR', 'PRONOM'];
   var ALL_VERBS = VERBS.concat(PRONOMINAL_VERBS);
   var NUM_OPTIONS = 4;
-  var NUM_QUESTIONS = 5;
+  var NUM_QUESTIONS = 10;
   var CAT_NAMES = {ALL:'Aléatoire', ER:'-er', IR:'-ir', RE:'-re / irr.', OIR:'-oir', PRONOM:'pronom.'};
   var category = 'ALL';
   var questions = [];
@@ -41,10 +41,12 @@
 
   function pickVerbs() {
     if (category === 'ALL') {
-      return shuffle(GROUPS).map(function (g) {
-        var pool = ALL_VERBS.filter(function (v) { return v.g === g; });
-        return pool[Math.floor(Math.random() * pool.length)];
+      var per = NUM_QUESTIONS / GROUPS.length;
+      var picks = [];
+      GROUPS.forEach(function (g) {
+        picks = picks.concat(shuffle(ALL_VERBS.filter(function (v) { return v.g === g; })).slice(0, per));
       });
+      return shuffle(picks);
     }
     return shuffle(ALL_VERBS.filter(function (v) { return v.g === category; })).slice(0, NUM_QUESTIONS);
   }
